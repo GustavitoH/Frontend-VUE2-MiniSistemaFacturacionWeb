@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Minimarket</a>
+      <a class="navbar-brand" href="#">Minimarket "CujiSama"</a>
       <button
         class="navbar-toggler"
         type="button"

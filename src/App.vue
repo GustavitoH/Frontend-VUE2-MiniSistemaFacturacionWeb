@@ -4,7 +4,6 @@
       <Header></Header>
       <index-productos></index-productos>
     </div>
-    <router-view />
   </div>
 </template>
 
