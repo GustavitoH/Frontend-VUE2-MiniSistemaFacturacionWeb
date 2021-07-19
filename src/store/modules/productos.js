@@ -14,6 +14,12 @@ const actions = {
       return response.data;
     });
   },
+  modificarProducto(context, producto) {
+    return productos.modificarProducto(producto).then((response) => {
+      context.commit("MODIFICAR_PRODUCTO", producto);
+      return response.data;
+    });
+  },
 };
 const mutations = {
   GET_PRODUCTOS(state, payload) {
@@ -21,6 +27,13 @@ const mutations = {
   },
   CREAR_PRODUCTO(state, payload) {
     state.listaProductos.push(payload);
+  },
+  MODIFICAR_PRODUCTO(state, payload) {
+    const array = state.listaProductos;
+    const idUpdateProd = (value) => {
+      return value.id === payload.id;
+    };
+    state.listaProductos[array.findIndex(idUpdateProd)] = payload;
   },
 };
 

@@ -23,7 +23,11 @@
       >
     </div>
     <div class="btn-group-vertical float-end mt-1">
-      <button type="button" class="btn btn-outline-primary btn-block m-1">
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-block m-1"
+        @click="modifarProducto()"
+      >
         Editar
       </button>
       <button type="button" class="btn btn-outline-danger btn-block m-1">
@@ -37,6 +41,21 @@ export default {
   name: "Producto",
   props: {
     producto: Object,
+  },
+  methods: {
+    modifarProducto() {
+      this.$parent.$parent.producto = { ...this.producto };
+      this.$parent.$parent.newProducto.producto =
+        this.$parent.$parent.producto.PRODUCTO;
+      this.$parent.$parent.newProducto.precio =
+        this.$parent.$parent.producto.PRECIO;
+      this.$parent.$parent.newProducto.descripcion =
+        this.$parent.$parent.producto.DESCRIPCION;
+      this.$parent.$parent.newProducto.cantidad =
+        this.$parent.$parent.producto.CANTIDAD;
+      this.$parent.$parent.newProducto.id = this.$parent.$parent.producto.ID;
+      this.$parent.$parent.buttonEdit = true;
+    },
   },
 };
 </script>

@@ -68,6 +68,14 @@
       >
         Guardar
       </button>
+      <button
+        type="button"
+        class="btn btn-primary float-right m-2"
+        v-if="buttonEdit"
+        @click="editarProducto()"
+      >
+        Editar
+      </button>
     </form>
     <List :listaProductos="listaProductos" />
   </div>
@@ -81,6 +89,7 @@ export default {
   name: "IndexProductos",
   data() {
     return {
+      buttonEdit: false,
       newProducto: {
         id: 0,
         producto: "",
@@ -88,6 +97,7 @@ export default {
         descripcion: "",
         cantidad: 0,
       },
+      producto: {},
     };
   },
   components: {
@@ -107,7 +117,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions("productos", ["getListaProductos", "crearProducto"]),
+    ...mapActions("productos", [
+      "getListaProductos",
+      "crearProducto",
+      "modificarProducto",
+    ]),
     loadProductos() {
       this.getListaProductos();
     },
@@ -118,6 +132,16 @@ export default {
         this.newProducto.precio = 0;
         this.newProducto.descripcion = "";
         this.newProducto.cantidad = 0;
+      });
+    },
+    editarProducto() {
+      this.modificarProducto(this.newProducto).then((res) => {
+        swal("Buen Trabajo!", res.message, "success");
+        this.newProducto.producto = "";
+        this.newProducto.precio = 0;
+        this.newProducto.descripcion = "";
+        this.newProducto.cantidad = 0;
+        this.buttonEdit = false;
       });
     },
   },

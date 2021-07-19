@@ -2,7 +2,9 @@
   <div id="app">
     <div id="nav">
       <Header></Header>
-      <index-productos></index-productos>
+      <div class="d-flex">
+        <index-productos></index-productos>
+      </div>
     </div>
   </div>
 </template>
