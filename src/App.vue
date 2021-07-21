@@ -1,9 +1,12 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <Header></Header>
-      <div class="d-flex">
-        <index-productos></index-productos>
+  <div id="app" class="container-fluid min-vh-100">
+    <div id="nav" class="row flex-nowrap">
+      <NavBar></NavBar>
+      <div class="col py-3 p-4">
+        <Header></Header>
+        <div class="d-flex min-vh-100">
+          <index-productos></index-productos>
+        </div>
       </div>
     </div>
   </div>
@@ -12,10 +15,12 @@
 <script>
 import Header from "@/components/Header";
 import IndexProductos from "@/views/productos/Index";
+import NavBar from "@/components/NavBar";
 
 export default {
   name: "App",
   components: {
+    NavBar,
     Header,
     IndexProductos,
   },

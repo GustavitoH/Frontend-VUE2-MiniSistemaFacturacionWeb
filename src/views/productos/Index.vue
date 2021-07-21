@@ -1,6 +1,6 @@
 <template>
-  <div class="w-50 m-auto shadow p-3 mb-5 bg-body rounded">
-    <h1 class="text-lg-left">Productos</h1>
+  <div class="w-100 m-auto shadow p-3 bg-body rounded min-vh-100">
+    <h1 class="text-start">Productos</h1>
     <nav class="navbar navbar-expand-lg navbar-dark bg-light">
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
@@ -15,75 +15,94 @@
         </ul>
       </div>
     </nav>
-    <h3 class="text-left py-3 m-0">Crear Producto</h3>
-    <form class="justify-content-center">
-      <div class="d-flex bd-highlight mb-3">
-        <div class="p-2 bd-highlight col-md-6">
-          <label for="inputProducto">producto</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputProducto"
-            v-model="newProducto.producto"
-            required
-          />
+    <div class="d-flex flex-row bd-highlight mb-2 mt-2">
+      <!--Modal-->
+        <button type="button" class="btn btn-primary" @click="modal.show()">
+          Agregar
+        </button>
+        <div class="modal fade" ref="exampleModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+                <button type="button" class="btn-close" @click="modal.hide()" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form class="justify-content-center text-start">
+                  <div class="d-flex bd-highlight mb-3">
+                    <div class="p-2 bd-highlight col-md-6">
+                      <label for="inputProducto">producto</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputProducto"
+                        v-model="newProducto.producto"
+                        required
+                      />
+                    </div>
+                    <div class="p-2 bd-highlight col-md-6">
+                      <label for="inputPrecio">Precio</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="inputPrecio"
+                        v-model="newProducto.precio"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="d-flex bd-highlight mb-3">
+                    <div class="p-2 bd-highlight col-md-6">
+                      <label for="inputDescripcion">Descripcion</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputEmail"
+                        v-model="newProducto.descripcion"
+                      />
+                    </div>
+                    <div class="p-2 bd-highlight col-md-6">
+                      <label for="inputCantidad">Cantidad</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="inputCantidad"
+                        v-model="newProducto.cantidad"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-primary float-right m-2"
+                    v-if="buttonEdit"
+                    @click="editarProducto()"
+                  >
+                    Editar
+                  </button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @click="modal.hide()">Cancelar</button>
+                <button
+                    type="button"
+                    class="btn btn-success float-right m-2"
+                    @click="crearNuevoProducto()"
+                  >
+                    Guardar
+                  </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="p-2 bd-highlight col-md-6">
-          <label for="inputPrecio">Precio</label>
-          <input
-            type="number"
-            class="form-control"
-            id="inputPrecio"
-            v-model="newProducto.precio"
-            required
-          />
-        </div>
-      </div>
-      <div class="d-flex bd-highlight mb-3">
-        <div class="p-2 bd-highlight col-md-6">
-          <label for="inputDescripcion">Descripcion</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputEmail"
-            v-model="newProducto.descripcion"
-          />
-        </div>
-        <div class="p-2 bd-highlight col-md-6">
-          <label for="inputCantidad">Cantidad</label>
-          <input
-            type="number"
-            class="form-control"
-            id="inputCantidad"
-            v-model="newProducto.cantidad"
-            required
-          />
-        </div>
-      </div>
-
-      <button
-        type="button"
-        class="btn btn-success float-right m-2"
-        @click="crearNuevoProducto()"
-      >
-        Guardar
-      </button>
-      <button
-        type="button"
-        class="btn btn-primary float-right m-2"
-        v-if="buttonEdit"
-        @click="editarProducto()"
-      >
-        Editar
-      </button>
-    </form>
-    <List :listaProductos="listaProductos" />
+    </div>
+    <List :listaProductos="listaProductos"/>
   </div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
 import swal from "sweetalert";
-
+import { Modal } from 'bootstrap'
 import List from "@/views/productos/List";
 export default {
   name: "IndexProductos",
@@ -98,10 +117,14 @@ export default {
         cantidad: 0,
       },
       producto: {},
+      modal: null,
     };
   },
   components: {
     List,
+  },
+  mounted() {
+    this.modal = new Modal(this.$refs.exampleModal)
   },
   computed: {
     ...mapState({
@@ -133,6 +156,7 @@ export default {
         this.newProducto.descripcion = "";
         this.newProducto.cantidad = 0;
       });
+      this.modal.hide();
     },
     editarProducto() {
       this.modificarProducto(this.newProducto).then((res) => {
