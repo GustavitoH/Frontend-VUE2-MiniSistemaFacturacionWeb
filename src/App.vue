@@ -3,7 +3,7 @@
     <div id="nav">
       <Header></Header>
       <div class="d-flex">
-        <index-productos></index-productos>
+        <router-view></router-view>
       </div>
     </div>
   </div>
@@ -11,13 +11,11 @@
 
 <script>
 import Header from "@/components/Header";
-import IndexProductos from "@/views/productos/Index";
 
 export default {
   name: "App",
   components: {
     Header,
-    IndexProductos,
   },
 };
 </script>
