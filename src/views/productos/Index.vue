@@ -121,6 +121,7 @@ export default {
       "getListaProductos",
       "crearProducto",
       "modificarProducto",
+      "eliminarProducto",
     ]),
     loadProductos() {
       this.getListaProductos();

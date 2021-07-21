@@ -30,19 +30,35 @@
       >
         Editar
       </button>
-      <button type="button" class="btn btn-outline-danger btn-block m-1">
+      <button
+        type="button"
+        class="btn btn-outline-danger btn-block m-1"
+        @click="deleteProducto()"
+      >
         Eliminar
       </button>
     </div>
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
+import swal from "sweetalert";
+
 export default {
   name: "Producto",
+  data() {
+    return {
+      prod: {
+        id: 0,
+        producto: "",
+      },
+    };
+  },
   props: {
     producto: Object,
   },
   methods: {
+    ...mapActions("productos", ["getListaProductos", "eliminarProducto"]),
     modifarProducto() {
       this.$parent.$parent.producto = { ...this.producto };
       this.$parent.$parent.newProducto.producto =
@@ -56,6 +72,55 @@ export default {
       this.$parent.$parent.newProducto.id = this.$parent.$parent.producto.ID;
       this.$parent.$parent.buttonEdit = true;
     },
+    deleteProducto() {
+      this.$parent.$parent.producto = { ...this.producto };
+      this.prod.id = this.$parent.$parent.producto.ID;
+      this.prod.producto = this.$parent.$parent.producto.PRODUCTO;
+
+      swal(`¿Estás seguro de eliminar el producto: ${this.prod.producto}?`, {
+        dangerMode: true,
+        buttons: {
+          Cancelar: "Cancelar",
+          Eliminar: {
+            value: "delete",
+          },
+        },
+        icon: "warning",
+      }).then((value) => {
+        switch (value) {
+          case "delete":
+            this.eliminarProducto(this.prod).then((res) => {
+              this.getListaProductos();
+              swal("Buen Trabajo!", res.message, "success");
+              this.newProducto.producto = "";
+              this.newProducto.precio = 0;
+              this.newProducto.descripcion = "";
+              this.newProducto.cantidad = 0;
+              this.buttonEdit = false;
+            });
+            break;
+        }
+      });
+    },
   },
 };
 </script>
+<style>
+.swal-button--Eliminar {
+  background-color: rgb(233, 57, 57);
+  font-size: 16px;
+  border: none;
+}
+.swal-button--Eliminar:hover {
+  background-color: rgb(233, 57, 57) !important;
+}
+.swal-button--Cancelar {
+  background-color: rgb(223, 223, 223);
+  font-size: 16px;
+  border: none;
+  color: rgb(27, 27, 27);
+}
+.swal-button--Cancelar:hover {
+  background-color: rgb(241, 241, 241) !important;
+}
+</style>

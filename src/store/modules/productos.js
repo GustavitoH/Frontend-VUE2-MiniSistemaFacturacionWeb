@@ -20,7 +20,14 @@ const actions = {
       return response.data;
     });
   },
+  eliminarProducto(context, producto) {
+    return productos.eliminarProducto(producto).then((response) => {
+      context.commit("ELIMINAR_PRODUCTO", producto);
+      return response.data;
+    });
+  },
 };
+
 const mutations = {
   GET_PRODUCTOS(state, payload) {
     state.listaProductos = payload;
@@ -34,6 +41,9 @@ const mutations = {
       return value.id === payload.id;
     };
     state.listaProductos[array.findIndex(idUpdateProd)] = payload;
+  },
+  ELIMINAR_PRODUCTO(state, payload) {
+    state.listaProductos.splice(state.listaProductos.indexOf(payload.id), 1);
   },
 };
 

@@ -7,8 +7,12 @@ const crearProducto = (nuevoProducto) =>
 const modificarProducto = (producto) => {
   return axios.put(`${API_URL}/productos/${producto.id}`, producto);
 };
+const eliminarProducto = (producto) =>
+  axios.delete(`${API_URL}/productos/${producto.id}`, producto);
+
 export default {
   listaProductos,
   crearProducto,
   modificarProducto,
+  eliminarProducto,
 };
