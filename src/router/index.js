@@ -20,6 +20,11 @@ const routes = [
     component: Productos,
   },
   {
+    path: "/productos/:id",
+    name: "eliminarProducto",
+    component: Productos,
+  },
+  {
     path: "/factura",
     name: "factura",
     component: Factura,

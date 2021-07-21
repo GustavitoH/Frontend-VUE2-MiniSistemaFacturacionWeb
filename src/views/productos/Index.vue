@@ -15,94 +15,110 @@
         </ul>
       </div>
     </nav>
-    <div class="d-flex flex-row bd-highlight mb-2 mt-2">
+    <div class="d-flex justify-content-end flex-row bd-highlight mb-2 mt-2">
       <!--Modal-->
-        <button type="button" class="btn btn-primary" @click="modal.show()">
-          Agregar
-        </button>
-        <div class="modal fade" ref="exampleModal" tabindex="-1" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
-                <button type="button" class="btn-close" @click="modal.hide()" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form class="justify-content-center text-start">
-                  <div class="d-flex bd-highlight mb-3">
-                    <div class="p-2 bd-highlight col-md-6">
-                      <label for="inputProducto">producto</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="inputProducto"
-                        v-model="newProducto.producto"
-                        required
-                      />
-                    </div>
-                    <div class="p-2 bd-highlight col-md-6">
-                      <label for="inputPrecio">Precio</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="inputPrecio"
-                        v-model="newProducto.precio"
-                        required
-                      />
-                    </div>
+      <button type="button" class="btn btn-primary" @click="modal.show()">
+        Agregar
+      </button>
+      <div
+        class="modal fade"
+        ref="exampleModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+              <button
+                type="button"
+                class="btn-close"
+                @click="modal.hide()"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form class="justify-content-center text-start">
+                <div class="d-flex bd-highlight mb-3">
+                  <div class="p-2 bd-highlight col-md-6">
+                    <label for="inputProducto">producto</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="inputProducto"
+                      v-model="newProducto.producto"
+                      required
+                    />
                   </div>
-                  <div class="d-flex bd-highlight mb-3">
-                    <div class="p-2 bd-highlight col-md-6">
-                      <label for="inputDescripcion">Descripcion</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="inputEmail"
-                        v-model="newProducto.descripcion"
-                      />
-                    </div>
-                    <div class="p-2 bd-highlight col-md-6">
-                      <label for="inputCantidad">Cantidad</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="inputCantidad"
-                        v-model="newProducto.cantidad"
-                        required
-                      />
-                    </div>
+                  <div class="p-2 bd-highlight col-md-6">
+                    <label for="inputPrecio">Precio</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="inputPrecio"
+                      v-model="newProducto.precio"
+                      required
+                    />
                   </div>
-                  <button
-                    type="button"
-                    class="btn btn-primary float-right m-2"
-                    v-if="buttonEdit"
-                    @click="editarProducto()"
-                  >
-                    Editar
-                  </button>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @click="modal.hide()">Cancelar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                  <div class="p-2 bd-highlight col-md-6">
+                    <label for="inputDescripcion">Descripcion</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="inputEmail"
+                      v-model="newProducto.descripcion"
+                    />
+                  </div>
+                  <div class="p-2 bd-highlight col-md-6">
+                    <label for="inputCantidad">Cantidad</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="inputCantidad"
+                      v-model="newProducto.cantidad"
+                      required
+                    />
+                  </div>
+                </div>
                 <button
-                    type="button"
-                    class="btn btn-success float-right m-2"
-                    @click="crearNuevoProducto()"
-                  >
-                    Guardar
-                  </button>
-              </div>
+                  type="button"
+                  class="btn btn-primary float-right m-2"
+                  v-if="buttonEdit"
+                  @click="editarProducto()"
+                >
+                  Editar
+                </button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                @click="modal.hide()"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                class="btn btn-success float-right m-2"
+                @click="crearNuevoProducto()"
+              >
+                Guardar
+              </button>
             </div>
           </div>
         </div>
+      </div>
     </div>
-    <List :listaProductos="listaProductos"/>
+    <List :listaProductos="listaProductos" />
   </div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
 import swal from "sweetalert";
-import { Modal } from 'bootstrap'
+import { Modal } from "bootstrap";
 import List from "@/views/productos/List";
 export default {
   name: "IndexProductos",
@@ -124,7 +140,7 @@ export default {
     List,
   },
   mounted() {
-    this.modal = new Modal(this.$refs.exampleModal)
+    this.modal = new Modal(this.$refs.exampleModal);
   },
   computed: {
     ...mapState({
@@ -144,6 +160,7 @@ export default {
       "getListaProductos",
       "crearProducto",
       "modificarProducto",
+      "eliminarProducto",
     ]),
     loadProductos() {
       this.getListaProductos();

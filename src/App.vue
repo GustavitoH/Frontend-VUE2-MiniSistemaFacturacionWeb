@@ -22,7 +22,7 @@ export default {
   components: {
     NavBar,
     Header,
-    IndexProductos
+    IndexProductos,
   },
 };
 </script>

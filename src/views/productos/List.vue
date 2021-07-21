@@ -29,8 +29,8 @@ export default {
 </script>
 
 <style scoped>
-  .my-custom-scrollbar {
-    overflow: scroll;
-    height: 50vh;
-  }
+.my-custom-scrollbar {
+  overflow: scroll;
+  height: 50vh;
+}
 </style>

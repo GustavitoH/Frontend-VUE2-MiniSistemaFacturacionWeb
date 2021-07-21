@@ -3,8 +3,6 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
-import VuePaginate from 'vue-paginate'
-Vue.use(VuePaginate)
 
 Vue.config.productionTip = false;
 
