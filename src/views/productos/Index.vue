@@ -83,7 +83,6 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import swal from "sweetalert";
-
 import List from "@/views/productos/List";
 export default {
   name: "IndexProductos",
