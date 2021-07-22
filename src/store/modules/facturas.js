@@ -4,7 +4,7 @@ const state = {
 };
 const actions = {
   getListaFacturas(context) {
-    return facturas.listaFactura().then((response) => {
+    return facturas.listaFacturas().then((response) => {
       context.commit("GET_FACTURAS", response.data);
     });
   },
