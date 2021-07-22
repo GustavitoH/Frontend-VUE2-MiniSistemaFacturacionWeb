@@ -18,5 +18,5 @@ export default {
   props: {
     kardex: Object,
   },
-}
+};
 </script>

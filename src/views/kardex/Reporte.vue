@@ -8,33 +8,35 @@
         </div>
         <!-- Fin de los datos -->
       </div>
-    <table class="table w-100">
-      <thead class="bg-info">
-        <tr>
-          <th width="5%" class="text-light" scope="col">PRODUCTO</th>
-          <th width="5%" class="text-light" scope="col">FECHA</th>
-          <th width="5%" class="text-light" scope="col">ACCION</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr scope="row" v-for="item in lista" :key="item.idkardex">
-          <td width="40%">{{ item.PRODUCTO }}</td>
-          <td width="20%">{{ item.FECHA }}</td>
-          <td width="40%">{{ item.ACCION }}</td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="table w-100">
+        <thead class="bg-info">
+          <tr>
+            <th width="5%" class="text-light" scope="col">PRODUCTO</th>
+            <th width="5%" class="text-light" scope="col">FECHA</th>
+            <th width="5%" class="text-light" scope="col">ACCION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr scope="row" v-for="item in lista" :key="item.idkardex">
+            <td width="40%">{{ item.PRODUCTO }}</td>
+            <td width="20%">{{ item.FECHA }}</td>
+            <td width="40%">{{ item.ACCION }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <button @click="download" type="button" class="btn btn-primary">Imprimir</button>
+    <button @click="download" type="button" class="btn btn-primary">
+      Imprimir
+    </button>
   </div>
 </template>
 
 <script>
-import html2canvas from 'html2canvas';
-import JsPDF from 'jspdf';
+import html2canvas from "html2canvas";
+import JsPDF from "jspdf";
 
 export default {
-    props: {
+  props: {
     lista: {
       type: Array,
     },
@@ -43,16 +45,16 @@ export default {
     download() {
       const quotes = document.getElementById("reporte");
       html2canvas(quotes).then((canvas) => {
-        const imgData = canvas.toDataURL('img/png');
-        const doc = new JsPDF('l', 'mm', 'a4');
+        const imgData = canvas.toDataURL("img/png");
+        const doc = new JsPDF("l", "mm", "a4");
         const pdfWidth = doc.internal.pageSize.getWidth();
         const pdfHeight = doc.internal.pageSize.getHeight;
         const ratio = pdfHeight / pdfWidth;
         this.pdfHeight = ratio * pdfWidth;
-        doc.addImage(imgData, 'PNG', 12, 10, 0, 0);
-        doc.save('kardex.pdf');
+        doc.addImage(imgData, "PNG", 12, 10, 0, 0);
+        doc.save("kardex.pdf");
       });
     },
   },
-}
+};
 </script>

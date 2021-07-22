@@ -93,7 +93,9 @@
     <div>
       <div class="card shadow m-auto mt-2 w-100" style="border: none">
         <div class="card-body justify-content-end">
-          <h2 class="card-subtitle text-muted">hola</h2>
+          <div class="p-4">
+            <List :listaKardex="listaKardex" :mostrar="false"/>
+          </div>
         </div>
       </div>
     </div>
@@ -101,12 +103,16 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
+import List from "@/views/kardex/List";
 
 export default {
   name: "Dashboard",
-
+  components: {
+    List,
+  },
   created() {
     this.loadTotalProductos();
+    this.loadKardex();
   },
   computed: {
     ...mapState({
@@ -118,6 +124,7 @@ export default {
           ",",
         ]),
       totalVendido: (state) => state.productos.totalVendido[0],
+      listaKardex: (state) => state.kardex.listaKardex,
     }),
   },
   methods: {
@@ -132,6 +139,10 @@ export default {
       this.getMasVendido();
       this.getMenosVendido();
       this.getTotalVendido();
+    },
+    ...mapActions("kardex", ["getListaKardex"]),
+    loadKardex() {
+      this.getListaKardex();
     },
   },
 };

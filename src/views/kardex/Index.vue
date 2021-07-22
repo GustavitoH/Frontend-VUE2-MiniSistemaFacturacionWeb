@@ -2,7 +2,7 @@
   <div class="w-100 bg-white">
     <h1>Kardex de ventas</h1>
     <div class="p-4">
-      <List :listaKardex="listaKardex" />
+      <List :listaKardex="listaKardex" :mostrar="true"/>
     </div>
   </div>
 </template>
@@ -25,12 +25,10 @@ export default {
     }),
   },
   methods: {
-    ...mapActions("kardex", [
-      "getListaKardex",
-    ]),
+    ...mapActions("kardex", ["getListaKardex"]),
     loadKardex() {
       this.getListaKardex();
     },
   },
-}
+};
 </script>
