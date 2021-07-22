@@ -301,12 +301,12 @@ export default {
                   this.arrayProductos[i].cantidad *
                   this.arrayProductos[i].valorunit,
               };
+              this.$store
+                .dispatch("detalleFacturas/crearDetalle", this.nuevoItem)
+                .then((res) => {
+                  swal("Buen Trabajo!", res.message, "success");
+                });
             }
-            this.$store
-              .dispatch("detalleFacturas/crearDetalle", this.nuevoItem)
-              .then((res) => {
-                swal("Buen Trabajo!", res.message, "success");
-              });
           });
         });
     },
