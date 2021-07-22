@@ -1,16 +1,16 @@
 <template>
-  <div class="w-75 m-auto shadow p-3 mb-5 bg-body rounded">
-    <h1 class="text-lg-left">Factura</h1>
+  <div class="w-100 shadow p-3 mb-5 bg-body rounded">
+    <h1 class="text-lg-start">Factura</h1>
     <nav class="navbar navbar-expand-lg navbar-dark bg-light">
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="#">
-              Facturación <span class="sr-only"></span>
-            </a>
+            <h6 class="nav-link" href="#">
+              Facturación <span class="sr-only">/</span>
+            </h6>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Lista</a>
+            <h6 class="nav-link" href="#">Lista</h6>
           </li>
         </ul>
       </div>

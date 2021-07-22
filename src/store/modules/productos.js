@@ -8,6 +8,11 @@ const actions = {
       context.commit("GET_PRODUCTOS", response.data);
     });
   },
+  getTotalProductos(context) {
+    return productos.totalProductos().then((response) => {
+      context.commit("GET_TOTAL_PRODUCTOS", response.data);
+    });
+  },
   crearProducto(context, nuevoProducto) {
     return productos.crearProducto(nuevoProducto).then((response) => {
       context.commit("CREAR_PRODUCTO", response.data.producto);
@@ -30,6 +35,9 @@ const actions = {
 
 const mutations = {
   GET_PRODUCTOS(state, payload) {
+    state.listaProductos = payload;
+  },
+  GET_TOTAL_PRODUCTOS(state, payload) {
     state.listaProductos = payload;
   },
   CREAR_PRODUCTO(state, payload) {

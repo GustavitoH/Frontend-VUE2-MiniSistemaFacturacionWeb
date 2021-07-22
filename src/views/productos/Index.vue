@@ -5,21 +5,27 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="#"
-              >Productos<span class="sr-only"></span
-            ></a>
+            <h6 class="nav-link" href="#">
+              Productos<span class="sr-only"></span>
+            </h6>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">/ Lista</a>
+          <li class="nav-item justify-content-center">
+            <h6 class="nav-link" href="#">/ Lista</h6>
           </li>
         </ul>
+      </div>
+      <div class="justify-content-end">
+        <button
+          type="button"
+          class="btn btn-primary me-4"
+          @click="modal.show()"
+        >
+          Agregar
+        </button>
       </div>
     </nav>
     <div class="d-flex justify-content-end flex-row bd-highlight mb-2 mt-2">
       <!--Modal-->
-      <button type="button" class="btn btn-primary" @click="modal.show()">
-        Agregar
-      </button>
       <div
         class="modal fade"
         ref="exampleModal"
@@ -184,6 +190,7 @@ export default {
         this.newProducto.cantidad = 0;
         this.buttonEdit = false;
       });
+      this.modal.hide();
     },
   },
 };

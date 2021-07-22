@@ -5,7 +5,7 @@
       <div class="col py-3 p-4">
         <Header></Header>
         <div class="d-flex">
-          <index-productos></index-productos>
+          <router-view></router-view>
         </div>
       </div>
     </div>
@@ -14,7 +14,6 @@
 
 <script>
 import Header from "@/components/Header";
-import IndexProductos from "@/views/productos/Index";
 import NavBar from "@/components/NavBar";
 
 export default {
@@ -22,7 +21,6 @@ export default {
   components: {
     NavBar,
     Header,
-    IndexProductos,
   },
 };
 </script>
@@ -34,16 +32,23 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #e6e6e679;
 }
 
 #nav {
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #ffffff;
 
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+  h6,
+  h3,
+  h1 {
+    font-weight: bold;
+    color: #3b5672;
   }
 }
 </style>
