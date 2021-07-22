@@ -71,6 +71,7 @@ export default {
         this.$parent.$parent.producto.CANTIDAD;
       this.$parent.$parent.newProducto.id = this.$parent.$parent.producto.ID;
       this.$parent.$parent.buttonEdit = true;
+      this.$parent.$parent.modal.show();
     },
     deleteProducto() {
       this.$parent.$parent.producto = { ...this.producto };

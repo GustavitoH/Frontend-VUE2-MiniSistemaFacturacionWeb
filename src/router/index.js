@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Productos from "@/views/productos/Index";
 import Factura from "@/views/factura/Factura";
+import Dashboard from "@/views/dashboard/Dashboard";
 Vue.use(VueRouter);
 
 const routes = [
@@ -28,6 +29,11 @@ const routes = [
     path: "/factura",
     name: "factura",
     component: Factura,
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: Dashboard,
   },
 ];
 

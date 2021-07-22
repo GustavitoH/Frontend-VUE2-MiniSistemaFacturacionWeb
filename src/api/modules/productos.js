@@ -2,6 +2,7 @@ import axios from "axios";
 import API_URL from "@/api";
 
 const listaProductos = () => axios.get(`${API_URL}/productos`);
+const totalProductos = () => axios.get(`${API_URL}/productos/total`);
 const crearProducto = (nuevoProducto) =>
   axios.post(`${API_URL}/productos`, nuevoProducto);
 const modificarProducto = (producto) => {
@@ -12,6 +13,7 @@ const eliminarProducto = (producto) =>
 
 export default {
   listaProductos,
+  totalProductos,
   crearProducto,
   modificarProducto,
   eliminarProducto,

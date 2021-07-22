@@ -31,6 +31,6 @@ export default {
 <style scoped>
 .my-custom-scrollbar {
   overflow: scroll;
-  height: 50vh;
+  height: 65vh;
 }
 </style>
