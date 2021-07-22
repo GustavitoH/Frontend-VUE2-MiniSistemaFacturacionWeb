@@ -50,5 +50,9 @@ export default {
     font-weight: bold;
     color: #3b5672;
   }
+  h2 {
+    font-weight: bold;
+    color: #42b983 !important;
+  }
 }
 </style>
