@@ -47,6 +47,7 @@ import Producto from '@/views/productos/Producto';
             id="floatingInput"
             placeholder="none"
             v-model="nuevoProducto.ID"
+            disabled
           />
           <label for="floatingInput">ID</label>
         </div>
@@ -57,6 +58,7 @@ import Producto from '@/views/productos/Producto';
             id="floatingInput"
             placeholder="none"
             v-model="nuevoProducto.PRODUCTO"
+            disabled
           />
           <label for="floatingInput">Producto</label>
         </div>
@@ -73,10 +75,15 @@ import Producto from '@/views/productos/Producto';
             class="form-control"
             id="floatingInput"
             placeholder="none"
+            v-model="cantidad"
           />
           <label for="floatingInput">Cantidad</label>
         </div>
-        <button type="button" class="btn btn-outline-primary me-2 ps-4 pe-4">
+        <button
+          type="button"
+          class="btn btn-outline-primary me-2 ps-4 pe-4"
+          @click="agregar()"
+        >
           Agregar
         </button>
       </div>
@@ -126,7 +133,17 @@ import Producto from '@/views/productos/Producto';
             </tr>
           </thead>
           <tbody>
-            <tr class="text-center">
+            <tr
+              class="text-center"
+              v-for="producto in arrayProductos"
+              :key="producto.productoIdproducto"
+            >
+              <td v-text="producto.productoIdproducto"></td>
+              <td v-text="producto.nombreproducto"></td>
+              <td v-text="producto.cantidad"></td>
+              <td v-text="producto.valorunit"></td>
+              <td v-text="producto.importe"></td>
+
               <td>
                 <div>
                   <button type="button" class="btn btn-danger text-center">
@@ -137,6 +154,28 @@ import Producto from '@/views/productos/Producto';
             </tr>
           </tbody>
         </table>
+        <div class="d-flex justify-content-end me-5">
+          <div class="p-2 bd-highlight col-md-2">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Subtotal"
+              id="inputSubtotal"
+              v-model="subtotal"
+              disabled
+            />
+          </div>
+          <div class="p-2 bd-highlight col-md-2">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Total"
+              id="inpuTotal"
+              v-model="total"
+              disabled
+            />
+          </div>
+        </div>
       </div>
       <button type="button" class="btn btn-secondary float-right">
         Cancelar
@@ -156,6 +195,14 @@ export default {
   name: "IndexFactura",
   data() {
     return {
+      arrayProductos: [],
+      productoIdproducto: 0,
+      nombreproducto: "",
+      cantidad: 0,
+      valorunit: 0,
+      importe: 0,
+      subtotal: 0,
+      total: 0,
       nuevoProducto: {
         id: 0,
         producto: "",
@@ -181,8 +228,46 @@ export default {
   },
   methods: {
     ...mapActions("productos", ["getListaProductos"]),
+    ...mapActions("facturas", ["getListaFacturas", "crearFactura"]),
     loadProductos() {
       this.getListaProductos();
+    },
+    agregar() {
+      const produ = {
+        productoIdproducto: this.nuevoProducto.ID,
+        nombreproducto: this.nuevoProducto.PRODUCTO,
+        cantidad: parseInt(this.cantidad),
+        valorunit: this.nuevoProducto.PRECIO,
+        subtotal: this.subtotales(),
+        total: this.subtotales() + this.subtotales() * 0.12,
+        importe: parseFloat(this.nuevoProducto.PRECIO) * this.cantidad,
+      };
+
+      this.arrayProductos.push(produ);
+      this.nuevoProducto.ID = 0;
+      this.nuevoProducto.PRODUCTO = "";
+      this.nuevoProducto.PRECIO = 0;
+      this.total = this.subtotales() + this.subtotales() * 0.12;
+      this.subtotal = this.subtotales();
+
+      this.cantidad = 0;
+    },
+    subtotales() {
+      let suma = 0;
+      for (let i = 0; i < this.arrayProductos.length; i = 1 + i) {
+        const element = this.arrayProductos[i].importe;
+        suma += parseFloat(element);
+      }
+      return suma;
+    },
+
+    eliminarItem(producto) {
+      const pos = this.arrayProductos.indexOf(producto);
+      this.rubro -= this.arrayProductos[pos].importe;
+      this.arrayProductos.splice(pos, 1);
+    },
+    crear() {
+      this.crearProducto(this.newProducto).then((res) => {});
     },
   },
 };
