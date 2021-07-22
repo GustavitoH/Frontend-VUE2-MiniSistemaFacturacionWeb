@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 m-auto shadow p-3 bg-body rounded min-vh-100">
+  <div class="w-100 m-auto shadow p-3 bg-body rounded">
     <h1 class="text-start">Productos</h1>
     <nav class="navbar navbar-expand-lg navbar-dark bg-light">
       <div class="collapse navbar-collapse" id="navbarNav">

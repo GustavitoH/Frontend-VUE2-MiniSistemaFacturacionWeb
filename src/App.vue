@@ -1,10 +1,10 @@
 <template>
-  <div id="app" class="container-fluid min-vh-100">
+  <div id="app" class="container-fluid">
     <div id="nav" class="row flex-nowrap">
       <NavBar></NavBar>
       <div class="col py-3 p-4">
         <Header></Header>
-        <div class="d-flex min-vh-100">
+        <div class="d-flex">
           <index-productos></index-productos>
         </div>
       </div>
