@@ -1,6 +1,9 @@
 import productos from "@/api/modules/productos";
 const state = {
   listaProductos: [],
+  listaMasVendidos: [],
+  listaMenosVendidos: [],
+  totalVendido: [],
 };
 const actions = {
   getListaProductos(context) {
@@ -11,6 +14,21 @@ const actions = {
   getTotalProductos(context) {
     return productos.totalProductos().then((response) => {
       context.commit("GET_TOTAL_PRODUCTOS", response.data);
+    });
+  },
+  getMasVendido(context) {
+    return productos.masVendidos().then((response) => {
+      context.commit("GET_MAS_VENDIDOS", response.data);
+    });
+  },
+  getMenosVendido(context) {
+    return productos.menosVendidos().then((response) => {
+      context.commit("GET_MENOS_VENDIDOS", response.data);
+    });
+  },
+  getTotalVendido(context) {
+    return productos.totalVendido().then((response) => {
+      context.commit("GET_TOTAL_VENDIDO", response.data);
     });
   },
   crearProducto(context, nuevoProducto) {
@@ -39,6 +57,15 @@ const mutations = {
   },
   GET_TOTAL_PRODUCTOS(state, payload) {
     state.listaProductos = payload;
+  },
+  GET_MAS_VENDIDOS(state, payload) {
+    state.listaMasVendidos = payload;
+  },
+  GET_MENOS_VENDIDOS(state, payload) {
+    state.listaMenosVendidos = payload;
+  },
+  GET_TOTAL_VENDIDO(state, payload) {
+    state.totalVendido = payload;
   },
   CREAR_PRODUCTO(state, payload) {
     state.listaProductos.push(payload);
