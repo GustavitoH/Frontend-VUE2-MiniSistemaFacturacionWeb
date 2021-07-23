@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <h3 class="navbar-brand" href="/">Minimarket "CujiSama"</h3>
+      <h3 class="navbar-brand" href="/">MAXIMARKET</h3>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">

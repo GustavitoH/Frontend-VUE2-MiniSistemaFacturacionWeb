@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-100">
     <div class="row justify-content-between p-3">
       <input type="text" class="form-control" placeholder="Buscar" />
     </div>
@@ -29,6 +29,5 @@ export default {
 .my-custom-scrollbar {
   overflow: scroll;
   height: 50vh;
-  width: 50vh;
 }
 </style>

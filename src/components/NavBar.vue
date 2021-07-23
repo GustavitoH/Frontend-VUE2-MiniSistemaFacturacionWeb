@@ -1,5 +1,5 @@
 <template>
-  <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark max-vh-100">
+  <div class="col-md-3 col-xl-2 px-sm-2 px-0 bg-dark min-vh-100">
     <div
       class="
         d-flex
@@ -69,12 +69,20 @@
                 </router-link>
               </a>
             </li>
+            <li>
+              <a href="#" class="text-light nav-link px-0">
+                <router-link class="nav-link" :to="{ name: 'listaFactura' }">
+                  Ventas
+                </router-link>
+              </a>
+            </li>
           </ul>
         </li>
         <li class="nav-item">
-          <a href="#" class="text-light nav-link align-middle px-0">
-            <i class="fs-4 bi-house"></i>
-            <span class="ms-1 d-none d-sm-inline">Kardex</span>
+          <a href="#" class="text-light nav-link px-0">
+            <router-link class="nav-link" :to="{ name: 'kardex' }"
+              >Kardex</router-link
+            >
           </a>
         </li>
       </ul>

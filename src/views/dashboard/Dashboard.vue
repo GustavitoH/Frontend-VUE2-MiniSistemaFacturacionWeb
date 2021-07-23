@@ -93,7 +93,9 @@
     <div>
       <div class="card shadow m-auto mt-2 w-100" style="border: none">
         <div class="card-body justify-content-end">
-          <h2 class="card-subtitle text-muted">hola</h2>
+          <div class="p-4">
+            <List :listaKardex="listaKardex" :mostrar="false" />
+          </div>
         </div>
       </div>
     </div>
@@ -102,8 +104,14 @@
 <script>
 import axios from "axios";
 import API_URL from "@/api";
+import { mapActions, mapState } from "vuex";
+import List from "@/views/kardex/List";
+
 export default {
   name: "Dashboard",
+  components: {
+    List,
+  },
   data() {
     return {
       totalproductos: 0,
@@ -128,6 +136,19 @@ export default {
     axios.get(`${API_URL}/productos/totalventas`).then((res) => {
       this.totalventas = res.data[0].TOTAL_VENTA_HOY;
     });
+    this.loadKardex();
+  },
+
+  computed: {
+    ...mapState({
+      listaKardex: (state) => state.kardex.listaKardex,
+    }),
+  },
+  methods: {
+    ...mapActions("kardex", ["getListaKardex"]),
+    loadKardex() {
+      this.getListaKardex();
+    },
   },
 };
 </script>

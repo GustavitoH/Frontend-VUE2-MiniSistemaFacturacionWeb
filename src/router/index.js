@@ -3,6 +3,9 @@ import VueRouter from "vue-router";
 import Productos from "@/views/productos/Index";
 import Factura from "@/views/factura/Factura";
 import Dashboard from "@/views/dashboard/Dashboard";
+import Kardex from "@/views/kardex/Index";
+import ListaFactura from "@/views/factura/ListaFactura";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -31,9 +34,19 @@ const routes = [
     component: Factura,
   },
   {
+    path: "/Ventas",
+    name: "listaFactura",
+    component: ListaFactura,
+  },
+  {
     path: "/dashboard",
     name: "dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/kardex",
+    name: "kardex",
+    component: Kardex,
   },
 ];
 
