@@ -88,12 +88,104 @@ import Producto from '@/views/productos/Producto';
           Agregar
         </button>
       </div>
+
+      <!-------------------------------Alert---------------------------->
+      <div class="ms-5 col-md-11 pe-4 justify-content-center" v-if="esvacio">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+          <symbol
+            id="exclamation-triangle-fill"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+            />
+          </symbol>
+        </svg>
+        <div
+          class="alert alert-danger d-flex align-items-center w-100"
+          role="alert"
+        >
+          <svg
+            class="bi flex-shrink-0 me-2"
+            width="24"
+            height="24"
+            role="img"
+            aria-label="Danger:"
+          >
+            <use xlink:href="#exclamation-triangle-fill" />
+          </svg>
+          <div>Complete los campos de manera correcta</div>
+        </div>
+      </div>
+      <!--------------------------------------------------------------->
+      <!-------------------------------Alert---------------------------->
+      <div class="ms-5 col-md-11 pe-4 justify-content-center" v-if="arrayvacio">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+          <symbol
+            id="exclamation-triangle-fill"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+            />
+          </symbol>
+        </svg>
+        <div
+          class="alert alert-danger d-flex align-items-center w-100"
+          role="alert"
+        >
+          <svg
+            class="bi flex-shrink-0 me-2"
+            width="24"
+            height="24"
+            role="img"
+            aria-label="Danger:"
+          >
+            <use xlink:href="#exclamation-triangle-fill" />
+          </svg>
+          <div>Seleccione el producto y la cantidad disponible en stock</div>
+        </div>
+      </div>
+      <!--------------------------------------------------------------->
+      <!-------------------------------Alert---------------------------->
+      <div class="ms-5 col-md-11 pe-4 justify-content-center" v-if="esrepetido">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+          <symbol
+            id="exclamation-triangle-fill"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+            />
+          </symbol>
+        </svg>
+        <div
+          class="alert alert-danger d-flex align-items-center w-100"
+          role="alert"
+        >
+          <svg
+            class="bi flex-shrink-0 me-2"
+            width="24"
+            height="24"
+            role="img"
+            aria-label="Danger:"
+          >
+            <use xlink:href="#exclamation-triangle-fill" />
+          </svg>
+          <div>Este producto ya fue seleccionado</div>
+        </div>
+      </div>
+      <!--------------------------------------------------------------->
+
       <!-- Modal productos -->
       <div class="modal fade" ref="modalProd" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="modalProdLabel">Producto</h5>
+              <h5 class="modal-title" id="modalProdLabel">Productos</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -205,6 +297,9 @@ export default {
       importe: 0,
       subtotal: 0,
       total: 0,
+      arrayvacio: false,
+      esrepetido: false,
+      esvacio: false,
       id: 0,
       cliente: "",
       nuevoProducto: {
@@ -243,25 +338,44 @@ export default {
       this.getIdDetalle();
     },
     agregar() {
-      const produ = {
-        productoIdproducto: this.nuevoProducto.ID,
-        nombreproducto: this.nuevoProducto.PRODUCTO,
-        cantidad: parseInt(this.cantidad),
-        valorunit: this.nuevoProducto.PRECIO,
-        subtotal: this.subtotales(),
-        total: this.subtotales() + this.subtotales() * 0.12,
-        importe: parseFloat(this.nuevoProducto.PRECIO) * this.cantidad,
-      };
-
-      this.arrayProductos.push(produ);
-      this.nuevoProducto.ID = 0;
-      this.nuevoProducto.PRODUCTO = "";
-      this.nuevoProducto.PRECIO = 0;
-      this.subtotal = this.subtotales();
-      this.total = this.subtotales() + this.subtotales() * 0.12;
-
-      this.cantidad = 0;
+      this.arrayvacio = false;
+      this.esrepetido = false;
+      if (
+        this.nuevoProducto.ID == 0 ||
+        this.nuevoProducto.PRODUCTO == "" ||
+        this.cantidad <= 0 ||
+        this.cantidad > this.nuevoProducto.CANTIDAD
+      ) {
+        this.arrayvacio = true;
+      } else {
+        const produ = {
+          productoIdproducto: this.nuevoProducto.ID,
+          nombreproducto: this.nuevoProducto.PRODUCTO,
+          cantidad: parseInt(this.cantidad),
+          valorunit: this.nuevoProducto.PRECIO,
+          subtotal: this.subtotales(),
+          total: this.subtotales() + this.subtotales() * 0.12,
+          importe: parseFloat(this.nuevoProducto.PRECIO) * this.cantidad,
+        };
+        for (let i = 0; i < this.arrayProductos.length; i = 1 + i) {
+          if (
+            this.arrayProductos[i].productoIdproducto == this.nuevoProducto.ID
+          ) {
+            this.esrepetido = true;
+          }
+        }
+        if (this.arrayProductos.length <= 0 || this.esrepetido == false) {
+          this.arrayProductos.push(produ);
+        }
+        this.nuevoProducto.ID = 0;
+        this.nuevoProducto.PRODUCTO = "";
+        this.nuevoProducto.PRECIO = 0;
+        this.subtotal = this.subtotales();
+        this.total = this.subtotales() + this.subtotales() * 0.12;
+        this.cantidad = 0;
+      }
     },
+
     subtotales() {
       let suma = 0;
       for (let i = 0; i < this.arrayProductos.length; i = 1 + i) {
@@ -278,37 +392,45 @@ export default {
     },
 
     crear() {
-      this.nuevaFactura = {
-        cliente: this.cliente,
-        subtotal: this.subtotal,
-        total: this.total,
-      };
-      this.$store
-        .dispatch("facturas/crearFactura", this.nuevaFactura)
-        .then((res) => {
-          swal("Buen Trabajo!", res.message, "success");
-          axios.get(`${API_URL}/detallefacturas/id`).then((res) => {
-            this.id = res;
-            console.log(this.id.data[0].ID);
-            for (let i = 0; i < this.arrayProductos.length; i = 1 + i) {
-              this.nuevoItem = {
-                id_factura: this.id.data[0].ID,
-                id_producto: this.arrayProductos[i].productoIdproducto,
-                cantidad: this.arrayProductos[i].cantidad,
-                preciounit: this.arrayProductos[i].valorunit,
-                precio: this.arrayProductos[i].valorunit,
-                total:
-                  this.arrayProductos[i].cantidad *
-                  this.arrayProductos[i].valorunit,
-              };
-              this.$store
-                .dispatch("detalleFacturas/crearDetalle", this.nuevoItem)
-                .then((res) => {
-                  swal("Buen Trabajo!", res.message, "success");
-                });
-            }
+      this.esvacio = false;
+      this.esrepetido = false;
+      if (this.cliente == "" || this.arrayProductos.length == 0) {
+        this.esvacio = true;
+      } else {
+        this.nuevaFactura = {
+          cliente: this.cliente,
+          subtotal: this.subtotal,
+          total: this.total,
+        };
+        this.$store
+          .dispatch("facturas/crearFactura", this.nuevaFactura)
+          .then((res) => {
+            swal("Buen Trabajo!", res.message, "success");
+            axios.get(`${API_URL}/detallefacturas/id`).then((res) => {
+              this.id = res;
+              for (let i = 0; i < this.arrayProductos.length; i = 1 + i) {
+                this.nuevoItem = {
+                  id_factura: this.id.data[0].ID,
+                  id_producto: this.arrayProductos[i].productoIdproducto,
+                  cantidad: this.arrayProductos[i].cantidad,
+                  preciounit: this.arrayProductos[i].valorunit,
+                  precio: this.arrayProductos[i].valorunit,
+                  total:
+                    this.arrayProductos[i].cantidad *
+                    this.arrayProductos[i].valorunit,
+                };
+                this.cliente = "";
+                this.subtotal = "";
+                this.$store
+                  .dispatch("detalleFacturas/crearDetalle", this.nuevoItem)
+                  .then((res) => {
+                    swal("Buen Trabajo!", res.message, "success");
+                  });
+              }
+              this.arrayProductos = null;
+            });
           });
-        });
+      }
     },
   },
 };

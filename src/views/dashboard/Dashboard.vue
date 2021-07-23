@@ -5,7 +5,7 @@
       <div class="card shadow mt-4 m-2 h-25 w-25" style="border: none">
         <div class="card-body">
           <h2 class="card-subtitle text-muted" style="font-size: 70px">
-            {{ totalProductos.TOTAL }}
+            {{ totalproductos }}
           </h2>
         </div>
         <div class="card-header" style="background-color: #e7e7e7a1">
@@ -23,13 +23,13 @@
             class="card-subtitle text-muted"
             style="margin-right: 120px; font-size: 70px"
           >
-            {{ masVendidos[1] }}
+            {{ this.masvendido[1] }}
           </h2>
           <h5
             class="card-subtitle text-muted mt-4 me-4"
             style="font-size: 20px"
           >
-            {{ masVendidos[0] }}
+            {{ this.masvendido[0] }}
           </h5>
         </div>
         <div class="card-header">
@@ -47,13 +47,13 @@
             class="card-subtitle text-muted"
             style="margin-right: 70px; font-size: 70px"
           >
-            {{ menosVendidos[1] }}
+            {{ menosvendidos[1] }}
           </h2>
           <h5
             class="card-subtitle text-muted mt-4 me-2"
             style="font-size: 20px"
           >
-            {{ menosVendidos[0] }}
+            {{ menosvendidos[0] }}
           </h5>
         </div>
         <div class="card-header">
@@ -69,9 +69,9 @@
         <div class="d-flex card-body justify-content-end">
           <h2
             class="card-subtitle text-muted"
-            style="margin-right: 70px; font-size: 70px"
+            style="margin-right: 20px; font-size: 70px"
           >
-            {{ totalVendido.TOTAL_VENTA_HOY }}
+            {{ totalventas }}
           </h2>
           <h5
             class="card-subtitle text-muted mt-4 me-4"
@@ -100,39 +100,34 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
-
+import axios from "axios";
+import API_URL from "@/api";
 export default {
   name: "Dashboard",
-
+  data() {
+    return {
+      totalproductos: 0,
+      masvendido: 0,
+      menosvendidos: 0,
+      totalventas: 0,
+    };
+  },
   created() {
-    this.loadTotalProductos();
-  },
-  computed: {
-    ...mapState({
-      totalProductos: (state) => state.productos.listaProductos[0],
-      masVendidos: (state) =>
-        state.productos.listaMasVendidos[0].PRODUCTO_MAS_VENDIDO.split([","]),
-      menosVendidos: (state) =>
-        state.productos.listaMenosVendidos[0].PRODUCTO_MENOS_VENDIDO.split([
-          ",",
-        ]),
-      totalVendido: (state) => state.productos.totalVendido[0],
-    }),
-  },
-  methods: {
-    ...mapActions("productos", [
-      "getTotalProductos",
-      "getMasVendido",
-      "getMenosVendido",
-      "getTotalVendido",
-    ]),
-    loadTotalProductos() {
-      this.getTotalProductos();
-      this.getMasVendido();
-      this.getMenosVendido();
-      this.getTotalVendido();
-    },
+    axios.get(`${API_URL}/productos/total`).then((res) => {
+      this.totalproductos = res.data[0].TOTAL;
+    });
+    axios.get(`${API_URL}/productos/masvendidos`).then((res) => {
+      this.masvendido = res.data[0].PRODUCTO_MAS_VENDIDO.split([","]);
+    });
+    axios.get(`${API_URL}/productos/menosvendidos`).then((res) => {
+      this.menosvendidos = res.data[0].PRODUCTO_MENOS_VENDIDO.split([","]);
+    });
+    axios.get(`${API_URL}/productos/menosvendidos`).then((res) => {
+      this.menosvendidos = res.data[0].PRODUCTO_MENOS_VENDIDO.split([","]);
+    });
+    axios.get(`${API_URL}/productos/totalventas`).then((res) => {
+      this.totalventas = res.data[0].TOTAL_VENTA_HOY;
+    });
   },
 };
 </script>
