@@ -2,7 +2,7 @@
   <div class="w-100 bg-white">
     <h1>Kardex de ventas</h1>
     <div class="p-4">
-      <List :listaKardex="listaKardex" :mostrar="true"/>
+      <List :listaKardex="listaKardex" :mostrar="true" />
     </div>
   </div>
 </template>

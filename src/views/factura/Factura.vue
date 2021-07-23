@@ -25,6 +25,7 @@ import Producto from '@/views/productos/Producto';
             class="form-control"
             id="floatingInput"
             placeholder="none"
+            v-model="cliente"
           />
           <label for="floatingInput">Cliente</label>
         </div>
@@ -47,6 +48,7 @@ import Producto from '@/views/productos/Producto';
             id="floatingInput"
             placeholder="none"
             v-model="nuevoProducto.ID"
+            disabled
           />
           <label for="floatingInput">ID</label>
         </div>
@@ -57,6 +59,7 @@ import Producto from '@/views/productos/Producto';
             id="floatingInput"
             placeholder="none"
             v-model="nuevoProducto.PRODUCTO"
+            disabled
           />
           <label for="floatingInput">Producto</label>
         </div>
@@ -73,10 +76,15 @@ import Producto from '@/views/productos/Producto';
             class="form-control"
             id="floatingInput"
             placeholder="none"
+            v-model="cantidad"
           />
           <label for="floatingInput">Cantidad</label>
         </div>
-        <button type="button" class="btn btn-outline-primary me-2 ps-4 pe-4">
+        <button
+          type="button"
+          class="btn btn-outline-primary me-2 ps-4 pe-4"
+          @click="agregar()"
+        >
           Agregar
         </button>
       </div>
@@ -126,10 +134,24 @@ import Producto from '@/views/productos/Producto';
             </tr>
           </thead>
           <tbody>
-            <tr class="text-center">
+            <tr
+              class="text-center"
+              v-for="producto in arrayProductos"
+              :key="producto.productoIdproducto"
+            >
+              <td v-text="producto.productoIdproducto"></td>
+              <td v-text="producto.nombreproducto"></td>
+              <td v-text="producto.cantidad"></td>
+              <td v-text="producto.valorunit"></td>
+              <td v-text="producto.importe"></td>
+
               <td>
                 <div>
-                  <button type="button" class="btn btn-danger text-center">
+                  <button
+                    type="button"
+                    class="btn btn-danger text-center"
+                    @click="eliminarItem(producto)"
+                  >
                     Eliminar
                   </button>
                 </div>
@@ -137,11 +159,27 @@ import Producto from '@/views/productos/Producto';
             </tr>
           </tbody>
         </table>
+        <div class="d-flex justify-content-end me-5">
+          <div class="p-2 bd-highlight col-md-2">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Subtotal"
+              id="inputSubtotal"
+              v-model="subtotal"
+              disabled
+            />
+          </div>
+        </div>
       </div>
       <button type="button" class="btn btn-secondary float-right">
         Cancelar
       </button>
-      <button type="button" class="btn btn-success float-right m-2">
+      <button
+        type="button"
+        class="btn btn-success float-right m-2"
+        @click="crear()"
+      >
         Guardar
       </button>
     </form>
@@ -149,6 +187,9 @@ import Producto from '@/views/productos/Producto';
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
+import axios from "axios";
+import API_URL from "@/api";
+import swal from "sweetalert";
 import { Modal } from "bootstrap";
 import List from "@/views/factura/List";
 
@@ -156,6 +197,16 @@ export default {
   name: "IndexFactura",
   data() {
     return {
+      arrayProductos: [],
+      productoIdproducto: 0,
+      nombreproducto: "",
+      cantidad: 0,
+      valorunit: 0,
+      importe: 0,
+      subtotal: 0,
+      total: 0,
+      id: 0,
+      cliente: "",
       nuevoProducto: {
         id: 0,
         producto: "",
@@ -167,6 +218,9 @@ export default {
   },
   created() {
     this.loadProductos();
+    this.$store.dispatch("facturas/getListaFacturas");
+    this.$store.dispatch("detalleFacturas/getListaDetalles");
+    this.$store.dispatch("productos/getListaProductos");
   },
   components: {
     List,
@@ -174,15 +228,87 @@ export default {
   computed: {
     ...mapState({
       listaProductos: (state) => state.productos.listaProductos,
+      listaFacturas: (state) => state.facturas.listaFacturas,
+      listaDetalle: (state) => state.detalleFacturas.listaDetalle,
+      IdDetalle: (state) => state.detalleFacturas.listaIdFactura,
     }),
   },
   mounted() {
     this.modal = new Modal(this.$refs.modalProd);
   },
   methods: {
-    ...mapActions("productos", ["getListaProductos"]),
+    ...mapActions("detalleFacturas", ["getIdDetalle"]),
+
     loadProductos() {
-      this.getListaProductos();
+      this.getIdDetalle();
+    },
+    agregar() {
+      const produ = {
+        productoIdproducto: this.nuevoProducto.ID,
+        nombreproducto: this.nuevoProducto.PRODUCTO,
+        cantidad: parseInt(this.cantidad),
+        valorunit: this.nuevoProducto.PRECIO,
+        subtotal: this.subtotales(),
+        total: this.subtotales() + this.subtotales() * 0.12,
+        importe: parseFloat(this.nuevoProducto.PRECIO) * this.cantidad,
+      };
+
+      this.arrayProductos.push(produ);
+      this.nuevoProducto.ID = 0;
+      this.nuevoProducto.PRODUCTO = "";
+      this.nuevoProducto.PRECIO = 0;
+      this.subtotal = this.subtotales();
+      this.total = this.subtotales() + this.subtotales() * 0.12;
+
+      this.cantidad = 0;
+    },
+    subtotales() {
+      let suma = 0;
+      for (let i = 0; i < this.arrayProductos.length; i = 1 + i) {
+        const element = this.arrayProductos[i].importe;
+        suma += parseFloat(element);
+      }
+      return suma;
+    },
+
+    eliminarItem(producto) {
+      const pos = this.arrayProductos.indexOf(producto);
+      this.subtotal -= this.arrayProductos[pos].importe;
+      this.arrayProductos.splice(pos, 1);
+    },
+
+    crear() {
+      this.nuevaFactura = {
+        cliente: this.cliente,
+        subtotal: this.subtotal,
+        total: this.total,
+      };
+      this.$store
+        .dispatch("facturas/crearFactura", this.nuevaFactura)
+        .then((res) => {
+          swal("Buen Trabajo!", res.message, "success");
+          axios.get(`${API_URL}/detallefacturas/id`).then((res) => {
+            this.id = res;
+            console.log(this.id.data[0].ID);
+            for (let i = 0; i < this.arrayProductos.length; i = 1 + i) {
+              this.nuevoItem = {
+                id_factura: this.id.data[0].ID,
+                id_producto: this.arrayProductos[i].productoIdproducto,
+                cantidad: this.arrayProductos[i].cantidad,
+                preciounit: this.arrayProductos[i].valorunit,
+                precio: this.arrayProductos[i].valorunit,
+                total:
+                  this.arrayProductos[i].cantidad *
+                  this.arrayProductos[i].valorunit,
+              };
+              this.$store
+                .dispatch("detalleFacturas/crearDetalle", this.nuevoItem)
+                .then((res) => {
+                  swal("Buen Trabajo!", res.message, "success");
+                });
+            }
+          });
+        });
     },
   },
 };

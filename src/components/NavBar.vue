@@ -69,6 +69,13 @@
                 </router-link>
               </a>
             </li>
+            <li>
+              <a href="#" class="text-light nav-link px-0">
+                <router-link class="nav-link" :to="{ name: 'listaFactura' }">
+                  Ventas
+                </router-link>
+              </a>
+            </li>
           </ul>
         </li>
         <li class="nav-item">

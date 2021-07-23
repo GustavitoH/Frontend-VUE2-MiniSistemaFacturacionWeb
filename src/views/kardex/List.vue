@@ -22,7 +22,7 @@
         <th class="pt-2 pb-2 bg-head text-white" width="5%">ACCIÓN</th>
       </tr>
     </thead>
-    <div class="table bg-white">
+    <div class="table bg-white my-custom-scrollbar">
       <kardex
         :key="kardex.id"
         :kardex="kardex"
@@ -91,7 +91,7 @@ export default {
 <style scoped>
 .my-custom-scrollbar {
   overflow: scroll;
-  height: 65vh;
+  height: 58vh;
 }
 
 .bg-head {

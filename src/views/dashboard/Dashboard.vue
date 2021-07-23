@@ -91,10 +91,10 @@
     </div>
     <!--Tabla Kardex-->
     <div>
-      <div class="card shadow m-auto mt-2 w-100" style="border: none">
+      <div class="card shadow m-auto mt-2 w-100" style="border: none;">
         <div class="card-body justify-content-end">
           <div class="p-4">
-            <List :listaKardex="listaKardex" :mostrar="false"/>
+            <List :listaKardex="listaKardex" :mostrar="false" />
           </div>
         </div>
       </div>
