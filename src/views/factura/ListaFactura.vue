@@ -13,10 +13,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="factura in listaFacturas" :key="factura.ID" v-on:click="obtenerFactura(factura)">
+          <tr
+            v-for="factura in listaFacturas"
+            :key="factura.ID"
+            v-on:click="obtenerFactura(factura)"
+          >
             <th scope="row">{{ factura.ID }}</th>
             <td>{{ factura.CLIENTE }}</td>
-            <td>{{ factura.FECHA.substr(0,10) }}</td>
+            <td>{{ factura.FECHA.substr(0, 10) }}</td>
             <td>{{ factura.TOTAL }}</td>
             <td>
               <button class="btn btn-primary" type="submit">Imprimir</button>
@@ -38,7 +42,7 @@
             ></button>
           </div>
           <div class="modal-body" v-if="mostrar === true">
-            <Reporte :factura="objectfactura" :lista="listaDetalle"/>
+            <Reporte :factura="objectfactura" :lista="listaDetalle" />
           </div>
           <div class="modal-footer"></div>
         </div>
@@ -63,7 +67,7 @@ export default {
       listaFacturas: (state) => state.facturas.listaFacturas,
     }),
   },
-  data () {
+  data() {
     return {
       objectfactura: {
         ID: 0,
@@ -78,7 +82,7 @@ export default {
         type: Array,
       },
       mostrar: false,
-    }
+    };
   },
   mounted() {
     this.modal = new Modal(this.$refs.exampleModal);
@@ -87,20 +91,18 @@ export default {
     this.loadFacturas();
   },
   methods: {
-    ...mapActions("facturas", [
-      "getListaFacturas",
-    ]),
+    ...mapActions("facturas", ["getListaFacturas"]),
     loadFacturas() {
       this.getListaFacturas();
     },
     obtenerFactura(factura) {
-      axios.get(`${API_URL}/detallefacturas`).then( response => {
+      axios.get(`${API_URL}/detallefacturas`).then((response) => {
         this.objectfactura = factura;
         this.listaDetalle = response.data;
         this.mostrar = true;
         this.modal.show();
       });
-    }
+    },
   },
 };
 </script>

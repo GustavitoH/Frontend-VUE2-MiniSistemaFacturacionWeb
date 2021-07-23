@@ -4,18 +4,24 @@
       <div class="w-100 text-start p-0 d-flex justify-content-between">
         <div>
           <p class="color-header fs-4">MAXIMARKET</p>
-          <p><span class="h-title">Dirección:</span> Av.nombre de la dirección</p>
+          <p>
+            <span class="h-title">Dirección:</span> Av.nombre de la dirección
+          </p>
           <p><span class="h-title">Teléfono:</span> 0989674225</p>
         </div>
         <div class="text-center">
           <p class="fs-2 fw-bold">FACTURA</p>
-          <p class="fs-2 fw-bold">#{{factura.ID}}</p>
+          <p class="fs-2 fw-bold">#{{ factura.ID }}</p>
         </div>
       </div>
       <div class="text-start">
         <p class="fw-bold fs-5 color-header">CLIENTE</p>
-        <p class="font-weight-bold" for=""><span class="h-title" >Nombre: </span> {{ factura.CLIENTE }}</p>
-        <p class="font-weight-bold" for=""><span class="h-title" >Fecha: </span>  {{ factura.FECHA.substr(0,10) }}</p>
+        <p class="font-weight-bold" for="">
+          <span class="h-title">Nombre: </span> {{ factura.CLIENTE }}
+        </p>
+        <p class="font-weight-bold" for="">
+          <span class="h-title">Fecha: </span> {{ factura.FECHA.substr(0, 10) }}
+        </p>
       </div>
       <div class="bg-body">
         <table class="table w-100">
@@ -39,7 +45,7 @@
       </div>
       <div class="d-flex justify-content-end mt-5">
         <div class="w-25 table-head rounded text-center">
-          <p class="fw-bold text-white">TOTAL: {{ factura.TOTAL}}</p>
+          <p class="fw-bold text-white">TOTAL: {{ factura.TOTAL }}</p>
         </div>
       </div>
     </div>
@@ -60,9 +66,7 @@ export default {
   },
   computed: {
     listaFiltrada() {
-      return this.lista.filter((u) =>
-        u.ID_FACTURA === this.factura.ID
-      );
+      return this.lista.filter((u) => u.ID_FACTURA === this.factura.ID);
     },
   },
   methods: {
@@ -84,18 +88,18 @@ export default {
 </script>
 
 <style scoped>
-  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
-  #reporte {
-    font-family: 'Open Sans', sans-serif;
-  }
-  .color-header {
-    color: #42B983;
-    font-weight: bold;
-  }
-  .table-head {
-    background-color: #42B983;;
-  }
-  .h-title {
-    font-weight: bold;
-  }
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
+#reporte {
+  font-family: "Open Sans", sans-serif;
+}
+.color-header {
+  color: #42b983;
+  font-weight: bold;
+}
+.table-head {
+  background-color: #42b983;
+}
+.h-title {
+  font-weight: bold;
+}
 </style>
